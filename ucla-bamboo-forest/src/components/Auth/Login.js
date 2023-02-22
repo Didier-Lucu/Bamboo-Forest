@@ -7,12 +7,16 @@ import { emailValidate, passwordValidate } from 'utils/form-validate';
 
 export default function Login() {
     const { login, isLoading } = useLogin();
-    const { register, handleSubmit, reset } = useForm()
+    const { register, handleSubmit, reset, formState: {errors}} = useForm()
+
+    console.log(errors)
 
     async function handleLogin(data) {
-        await login({ email: data.email, password: data.password, redirectTo: DASHBOARD });
+        const success = await login({ email: data.email, password: data.password, redirectTo: DASHBOARD });
 
-        reset();
+        if (success) {
+            reset();
+        }
     }
 
     return <Center w="100%" h="100vh" >
@@ -20,15 +24,15 @@ export default function Login() {
             <Heading mb="4" size="lg" textAlign="center">Login
             </Heading>
             <form onSubmit={handleSubmit(handleLogin)}>
-                <FormControl isInvalid={true} py="2">
+                <FormControl isInvalid={errors.email} py="2">
                     <FormLabel>Email</FormLabel>
                     <Input type="email" placeholder="Email" {...register('email', emailValidate)} />
-                    <FormErrorMessage>Email Error Message</FormErrorMessage>
+                    <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
                 </FormControl>
-                <FormControl isInvalid={true} py="2">
+                <FormControl isInvalid={errors.password} py="2">
                     <FormLabel>Password</FormLabel>
                     <Input type="password" placeholder="Password" {...register('password', passwordValidate)} />
-                    <FormErrorMessage>PSW Error Message</FormErrorMessage>
+                    <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
                 </FormControl>
                 <Button mt="4" type="submit" colorScheme="blue" size="md" width="full" isLoading={false} loadingText="Welcome!" > Login </Button>
             </form>
