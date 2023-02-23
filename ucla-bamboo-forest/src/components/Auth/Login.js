@@ -34,7 +34,7 @@ export default function Login() {
                     <Input type="password" placeholder="Password" {...register('password', passwordValidate)} />
                     <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
                 </FormControl>
-                <Button mt="4" type="submit" colorScheme="blue" size="md" width="full" isLoading={false} loadingText="Welcome!" > Login </Button>
+                <Button mt="4" type="submit" colorScheme="blue" size="md" width="full" isLoading={isLoading} loadingText="Welcome!" > Login </Button>
             </form>
             <Text align="center">
                 Don't have an account?{" "}

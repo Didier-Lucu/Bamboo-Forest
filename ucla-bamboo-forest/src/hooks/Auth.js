@@ -1,16 +1,39 @@
 import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
-import { auth } from "lib/firebase";
-import { useState } from "react";
-import { DASHBOARD } from "lib/router";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "lib/firebase";
+import { useEffect, useState } from "react";
+import { DASHBOARD, LOGIN } from "lib/router";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { setDoc, doc, getDoc } from "firebase/firestore";
+import isUserNameExists from "utils/userNameExist";
 
 export function useAuth() {
-    const [authUser, isLoading, error] = useAuthState(auth);
+    const [authUser, authenticating, error] = useAuthState(auth);
+    const [isLoading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        async function fetchData() {
+            setLoading(true);
+            const ref = doc(db, "users", authUser.uid);
+            const docSnapShot = await getDoc(ref);
+            setLoading(false);
+            setUser(docSnapShot.data());
+        }
+
+        if (!authenticating) {
+            if (authUser) {
+                fetchData();
+            }
+            else {
+                setLoading(false)
+            }
+        }
+    }, [authenticating]);
 
     return {
-        user: authUser,
+        user,
         isLoading,
         error
     };
@@ -68,7 +91,7 @@ export function useLogOut() {
                 position: "top",
                 isClosable: true,
             });
-            navigate(DASHBOARD);
+            navigate(LOGIN);
         }
         else {
             toast({
@@ -83,4 +106,63 @@ export function useLogOut() {
 
     }
     return { logout, isLoading };
+}
+
+export function useRegister() {
+    const [isLoading, setLoading] = useState(false);
+    const toast = useToast();
+    const navigate = useNavigate();
+
+    async function register({ username, email, password, redirectTo = DASHBOARD }) {
+        setLoading(true);
+
+        const usernameExists = await isUserNameExists(username)
+
+        if (usernameExists) {
+            toast({
+                title: "Username already exists",
+                status: "error",
+                duration: 3000,
+                position: "top",
+                isClosable: true,
+            });
+            setLoading(false);
+        }
+        else {
+            try {
+                const res = await createUserWithEmailAndPassword(auth, email, password); //gives back a user object
+
+                await setDoc(doc(db, "users", res.user.uid), {
+                    id: res.user.uid,
+                    username: username.toLowerCase(),
+                    profilePhoto: "",
+                    date: Date.now(),
+                });
+
+                toast({
+                    title: "Account created successfully",
+                    description: "Now logging you in...",
+                    status: "success",
+                    duration: 3000,
+                    position: "top",
+                    isClosable: true,
+                });
+                navigate(redirectTo);
+            }
+            catch (error) {
+                toast({
+                    title: "Error creating account",
+                    description: error.message,
+                    status: "error",
+                    duration: 3000,
+                    position: "top",
+                    isClosable: true,
+                });
+            }
+            finally {
+                setLoading(false);
+            }
+        }
+    }
+    return { register, isLoading };
 }
