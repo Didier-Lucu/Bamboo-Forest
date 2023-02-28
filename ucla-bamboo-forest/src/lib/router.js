@@ -3,6 +3,7 @@ import Login from "components/Auth/Login";
 import Register from "components/Auth/Register";
 import Layout from "components/layout";
 import Dashboard from "components/Auth/dashboard";
+import Comments from "components/comments"
 
 export const ROOT = "/";
 export const LOGIN = "/login";
@@ -23,7 +24,7 @@ export const router = createBrowserRouter([
         path: PROTECTED, element: <Layout />, children: [
             { path: DASHBOARD, element: <Dashboard />, },
             { path: PROFILE, element: "Profile", },
-            { path: COMMENTS, element: "All Comments for post id", },
+            { path: COMMENTS, element: <Comments />, },
         ]
     },
 

@@ -1,9 +1,10 @@
 import { Flex, IconButton } from "@chakra-ui/react";
 import { useAuth } from "hooks/Auth";
-import { FaRegHeart, FaHeart , FaRegTrashAlt, FaRegComment} from "react-icons/fa";
+import { FaRegHeart, FaHeart , FaComment, FaRegTrashAlt, FaRegComment } from "react-icons/fa";
 import { useToggleLike , useDeletePost } from "hooks/Posts";
 import { Link } from "react-router-dom";
 import { PROTECTED } from "lib/router";
+import { useComments } from "hooks/Comments";
 
 export default function Actions({ post }) {
     const { id, likes } = post;
@@ -12,6 +13,7 @@ export default function Actions({ post }) {
     const isLiked = likes.includes(user?.id);
     const { toggleLike, isLoading: toggleLikeLoading } = useToggleLike({ id, isLiked, uid: user?.id });
     //const {deletePost, isLoading:deleteLoading }= useDeletePost(id);
+    const { comments, isLoading: commentsLoading } = useComments(id);
 
     return (
         <Flex padding={"2"}>
@@ -36,10 +38,10 @@ export default function Actions({ post }) {
                     size={"md"}
                     colorScheme={"teal"}
                     variant={"ghost"}
-                    icon={ <FaRegComment />}
+                    icon={comments?.length === 0 ? <FaRegComment /> : <FaComment />}
                     isRound
                 />
-                5
+                {comments?.length}
             </Flex>
             <Flex alignItems={"center"} marginLeft={"2"}>
                 <IconButton
