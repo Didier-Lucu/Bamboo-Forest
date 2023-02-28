@@ -13,14 +13,14 @@ export default function Navbar() {
             pos="fixed"
             width="full"
             borderTop="6px solid"
-            borderTopColor="teal.400"
+            borderTopColor="blue.400"
             height="16"
             zIndex="3"
             justify="center"
             bg="white"
         >
             <Flex px="4" w="full" align="center" maxW="1200px">
-                <Link color="teal" as={RouterLink} to={DASHBOARD} fontWeight="bold">
+                <Link color="black" as={RouterLink} to={DASHBOARD} fontWeight="bold">
                     Home
                 </Link>
                 <Button

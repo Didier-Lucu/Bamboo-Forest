@@ -8,7 +8,7 @@ export default function UsernameButton({ user }) {
         <Button
             as={Link}
             to={`${PROTECTED}/profile/${user.id}`}
-            colorScheme={"teal"}
+            colorScheme={"yellow"}
             variant={"link"}
         >{user.username}
         </Button>

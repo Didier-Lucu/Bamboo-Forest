@@ -22,7 +22,7 @@ function NewPost() {
         <Box maxWidth={"600px"} margin={"auto"} paddingY={"20"}>
             <form onSubmit={handleSubmit(handleAddPost)}>
                 <HStack justify={"space-between"}>
-                    <Heading size={"lg"}>New Post</Heading>
+                    <Heading size={"lg"}>What's on your mind?</Heading>
                     <Button
                         colorScheme={"red"}
                         type={"submit"}

@@ -36,7 +36,7 @@ export default function Actions({ post }) {
                     to={`${PROTECTED}/comments/${id}`}
                     isLoading={toggleLikeLoading || userLoading}
                     size={"md"}
-                    colorScheme={"teal"}
+                    colorScheme={"blue"}
                     variant={"ghost"}
                     icon={comments?.length === 0 ? <FaRegComment /> : <FaComment />}
                     isRound

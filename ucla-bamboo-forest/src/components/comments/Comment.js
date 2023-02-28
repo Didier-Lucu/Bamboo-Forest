@@ -14,14 +14,14 @@ export default function Comment({ comment }) {
     const { user: authUser, isLoading: authLoading } = useAuth();
     const { deleteComment, isLoading: deleteLoading } = useDeleteComment(id)
 
-    if (userLoading) return "Loading...";
+    if (userLoading) return;
 
     return (
         <Box px="4" py="2" maxW="600px" mx="auto" textAlign="left">
           <Flex pb="2">
             <Avatar user={user} size="sm" />
             <Box flex="1" ml="4">
-              <Flex borderBottom="1px solid" borderColor="teal.100" pb="2">
+              <Flex borderBottom="1px solid" borderColor="blue.400" pb="2">
                 <Box>
                   <UsernameButton user={user} />
                   <Text fontSize="xs" color="gray.500">
