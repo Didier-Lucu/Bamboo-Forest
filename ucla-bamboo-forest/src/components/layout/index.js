@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "hooks/Auth";
 import Navbar from "components/Navbar";
+import { Box, Flex } from "@chakra-ui/react";
 
 export default function Layout() {
     const location = useLocation();
@@ -25,7 +26,12 @@ export default function Layout() {
     return (
         <>
             <Navbar />
-            <Outlet />
+            <Flex pt="16" pb="12" mx="auto" w="full" maxW="1200px">
+                <Box w="1100px">
+                    <Outlet />
+                </Box>
+            </Flex>
+            
         </>
     );
 }
