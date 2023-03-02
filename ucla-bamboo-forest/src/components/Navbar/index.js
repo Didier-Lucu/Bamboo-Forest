@@ -6,7 +6,7 @@ import { PROTECTED } from "lib/router";
 
 export default function Navbar() {
     const { logout, isLoading } = useLogOut();
-    const {user, userLoading} = useAuth();
+    const { user } = useAuth();
 
     return (
         <Flex
@@ -24,7 +24,7 @@ export default function Navbar() {
                 <Link color="black" as={RouterLink} to={DASHBOARD} fontWeight="bold">
                     Home
                 </Link>
-                <Link ml="8" color="black" as={RouterLink} to={`${PROTECTED}/profile/${user.id}`} fontWeight="bold">
+                <Link ml="8" color="black" as={RouterLink} to={`${PROTECTED}/profile/${user?.id}`} fontWeight="bold">
                     Profile
                 </Link>
                 <Button
