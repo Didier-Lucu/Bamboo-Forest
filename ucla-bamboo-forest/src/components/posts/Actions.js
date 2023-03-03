@@ -31,10 +31,9 @@ export default function Actions({ post }) {
             </Flex>
             <Flex alignItems={"center"} marginLeft={"2"}>
                 <IconButton
-                    onClick={toggleLike}
                     as={Link}
                     to={`${PROTECTED}/comments/${id}`}
-                    isLoading={toggleLikeLoading || userLoading}
+                    isLoading={commentsLoading || userLoading}
                     size={"md"}
                     colorScheme={"blue"}
                     variant={"ghost"}

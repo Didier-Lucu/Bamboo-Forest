@@ -7,7 +7,7 @@ import Post from "./index";
 export default function PostLists({ posts }) {
     return (
         <Box paddingX={"200px"} align={"center"}>
-            <Box paddingX={"230px"} align={"left"}>
+            <Box paddingX={"60px"} align={"left"}>
                 <Menu>
                     <MenuButton as={Button} rightIcon={<HamburgerIcon />}>
                         Sort by
