@@ -7,7 +7,7 @@ import { PROTECTED } from "lib/router";
 import { useComments } from "hooks/Comments";
 
 export default function Actions({ post }) {
-    const { id, likes } = post;
+    const { id, likes , uid} = post;
     const { user, isLoading: userLoading } = useAuth();
 
     const isLiked = likes.includes(user?.id);
@@ -42,8 +42,8 @@ export default function Actions({ post }) {
                 />
                 {comments?.length}
             </Flex>
-            <Flex alignItems={"center"} marginLeft={"2"}>
-                <IconButton
+              {!userLoading && (user.id === uid)  &&  
+              (<IconButton
                     onClick={deletePost}
                     marginLeft={"auto"}
                     isLoading={deleteLoading}
@@ -52,7 +52,6 @@ export default function Actions({ post }) {
                     variant={"ghost"}
                     icon={<FaRegTrashAlt /> }
                     isRound
-                />
-            </Flex>
+                />)}
         </Flex>)
 }
