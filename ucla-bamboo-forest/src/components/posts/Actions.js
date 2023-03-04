@@ -12,7 +12,7 @@ export default function Actions({ post }) {
 
     const isLiked = likes.includes(user?.id);
     const { toggleLike, isLoading: toggleLikeLoading } = useToggleLike({ id, isLiked, uid: user?.id });
-    //const {deletePost, isLoading:deleteLoading }= useDeletePost(id);
+    const {deletePost, isLoading:deleteLoading }= useDeletePost({id});
     const { comments, isLoading: commentsLoading } = useComments(id);
 
     return (
@@ -44,9 +44,9 @@ export default function Actions({ post }) {
             </Flex>
             <Flex alignItems={"center"} marginLeft={"2"}>
                 <IconButton
-                    //onClick={deletePost}
+                    onClick={deletePost}
                     marginLeft={"auto"}
-                    //isLoading={deleteLoading}
+                    isLoading={deleteLoading}
                     size={"md"}
                     colorScheme={"black"}
                     variant={"ghost"}
