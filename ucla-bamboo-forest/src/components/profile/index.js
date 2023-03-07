@@ -36,7 +36,7 @@ export default function Profile() {
                             Posts: {posts.length}
                         </Text>
                         <Text color="gray.700" fontSize={["sm", "lg"]}>
-                            Likes: TODO
+                            Likes: {posts.map(post => post.likes.length).reduce((result,number)=> result+number)}
                         </Text>
                         <Text color="gray.700" fontSize={["sm", "lg"]}>
                             Joined: {format(user.date, "MMMM YYY")}
