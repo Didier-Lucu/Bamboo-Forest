@@ -3,7 +3,7 @@
 
 ## 📝 Documentation 📝
 
-[Project Proposal](https://docs.google.com/document/d/153SG_c-b2jPUeQPYvu6sdDVM08W_Pq8JH2Jua1BsYVo/edit)
+[Project Proposal](https://docs.google.com/document/d/19YIbnkAOOQ79nP-3MTmFnQitH0SRHKnbBT7LCAZj8Ig/edit)
 
 
 ## 👨‍💻 Installation 👨‍💻 
