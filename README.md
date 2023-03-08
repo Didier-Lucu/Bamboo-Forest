@@ -25,5 +25,3 @@ npm start
 ```
 
 ### _(MUST DOWNLOAD Node.js to do step 3 and further)_
-
-<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=ericseoungminkim&show_icons=true&locale=en&layout=compact" alt="ericseoungminkim" /></p>
