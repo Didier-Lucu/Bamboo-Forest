@@ -22,7 +22,7 @@ export default function Profile() {
         <Stack spacing="5">
             <Flex p={["4", "6"]} pos="relative" align="center">
                 <Avatar size="xl" user={user} />
-
+                
                 {!authLoading && (authUser.id === user.id) &&
                     <Button pos="absolute" mb="2" top="6" right="6" colorScheme="blue" onClick={onOpen}>
                         Change Profile Picture
@@ -41,6 +41,7 @@ export default function Profile() {
                         <Text color="gray.700" fontSize={["sm", "lg"]}>
                             Joined: {format(user.date, "MMMM YYY")}
                         </Text>
+                        
                     </HStack>
                 </Stack>
 
