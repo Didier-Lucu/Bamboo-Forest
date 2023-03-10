@@ -1,4 +1,5 @@
-import { Box, Button, Heading, HStack, Textarea } from "@chakra-ui/react";
+import { Box, Button, Heading, HStack, Textarea, FormControl, FormLabel, Modal, ModalBody, 
+    ModalCloseButton, ModalContent, ModalHeader, ModalOverlay} from "@chakra-ui/react";
 import PostLists from "components/posts/PostLists";
 import { useAuth } from "hooks/Auth";
 import { useAddPost, usePosts } from "hooks/Posts";

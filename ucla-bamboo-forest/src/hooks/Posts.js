@@ -5,6 +5,7 @@ import { db } from "lib/firebase";
 import { useState } from "react";
 import { useCollectionData, useDocumentData } from "react-firebase-hooks/firestore"
 
+
 export function useAddPost() {
     const [isLoading, setLoading] = useState(false);
     const toast = useToast();
@@ -50,31 +51,26 @@ export function useDeletePost({id}) {
     const  [isLoading, setLoading] = useState(false);
     const toast = useToast();
 
-
     async function deletePost() {
         const confirm = window.confirm("Are you sure you want to delete?");
 
         if (confirm) {
             setLoading(true);
-            async function deleteComment(docRef) {
-                deleteDoc(docRef);
-            }
-            await deleteDoc(doc(db, "posts", id));
 
-            console.log("works");
+            await deleteDoc(doc(db, "posts", id));
+            
             const q = query(collection(db,"comments"), where("postID", "==", id));
             const querySnapshot = await getDocs(q);
-            querySnapshot.forEach(doc => deleteComment(doc.ref));
-            
+            querySnapshot.forEach(async (doc) => deleteDoc(doc.ref));
+
             toast({
                 title: "Post Deleted",
                 status: "info",
                 position: "top",
                 duration:"5000",
                 isClosable: true,
-            })
-
-
+            });
+            
             setLoading(false);
         }
     }
