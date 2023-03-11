@@ -101,10 +101,10 @@ export function usePost(id) {
 export function usePosts(uid = null) {
   const q = uid
     ? query(
-        collection(db, "posts"),
-        orderBy("date", "desc"),
-        where("uid", "==", uid)
-      )
+      collection(db, "posts"),
+      orderBy("date", "desc"),
+      where("uid", "==", uid)
+    )
     : query(collection(db, "posts"), orderBy("date", "desc"));
   const [posts, isLoading, error] = useCollectionData(q);
   if (error) throw error;
