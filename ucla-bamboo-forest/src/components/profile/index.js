@@ -39,7 +39,7 @@ export default function Profile() {
             colorScheme="blue"
             onClick={onOpen}
           >
-            Change Profile Picture
+            Edit Profile
           </Button>
         )}
 
