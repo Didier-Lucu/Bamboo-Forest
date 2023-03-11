@@ -2,7 +2,7 @@ import { doc, query, updateDoc } from "firebase/firestore";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import { db, storage } from "lib/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
@@ -66,7 +66,17 @@ export function useUpdateAvatar(uid) {
 export function useUpdateUser(uid) {
   const [isLoading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
+  const [canChange, setCanChange] = useState(true); // state to track if user can change username
   const toast = useToast();
+
+  // useEffect to reset canChange state after 60 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCanChange(true);
+    }, 60000);
+
+    return () => clearTimeout(timer);
+  }, [canChange]);
 
   async function updateUsername() {
     setLoading(true);
@@ -83,6 +93,8 @@ export function useUpdateUser(uid) {
     });
 
     setLoading(false);
+    setUsername(""); // reset username input field
+    setCanChange(false); // set canChange state to false to block user from changing their username
   }
 
   return {

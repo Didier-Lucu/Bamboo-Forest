@@ -11,8 +11,8 @@ import {
   ModalHeader,
   ModalOverlay,
   Input,
-  Divider,
 } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 import { useAuth } from "hooks/Auth";
 import { useUpdateAvatar, useUpdateUser } from "hooks/users";
 import Avatar from "./Avatar";
@@ -30,9 +30,25 @@ export default function EditProfile({ isOpen, onClose }) {
     updateUsername,
     isLoading: usernameLoading,
   } = useUpdateUser(user?.id);
+  const [timeLeft, setTimeLeft] = useState(0);
 
   function handleChange(e) {
     setFile(e.target.files[0]);
+  }
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimeLeft((timeLeft) => (timeLeft > 0 ? timeLeft - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  function handleUpdateUsername() {
+    if (timeLeft === 0) {
+      updateUsername();
+      setTimeLeft(60);
+    }
   }
 
   if (authLoading) return "Loading...";
@@ -59,7 +75,7 @@ export default function EditProfile({ isOpen, onClose }) {
             onClick={() => updateAvatar()}
             isLoading={fileLoading}
           >
-            Save Avatar
+            Save Profile Photo
           </Button>
           <Text fontSize="md" fontWeight="semibold" align="center" my={"2.5"}>
             OR
@@ -76,10 +92,13 @@ export default function EditProfile({ isOpen, onClose }) {
             w="full"
             my="2"
             colorScheme="blue"
-            onClick={() => updateUsername()}
+            onClick={handleUpdateUsername}
             isLoading={usernameLoading}
+            disabled={timeLeft !== 0}
           >
-            Save Username
+            {timeLeft !== 0
+              ? `${timeLeft} seconds left to change your username again`
+              : "Save Username"}
           </Button>
         </ModalBody>
       </ModalContent>
