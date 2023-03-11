@@ -7,12 +7,12 @@ import { PROTECTED } from "lib/router";
 import { useComments } from "hooks/Comments";
 
 export default function Actions({ post }) {
-    const { id, likes } = post;
+    const { id, likes , uid} = post;
     const { user, isLoading: userLoading } = useAuth();
 
     const isLiked = likes.includes(user?.id);
     const { toggleLike, isLoading: toggleLikeLoading } = useToggleLike({ id, isLiked, uid: user?.id });
-    //const {deletePost, isLoading:deleteLoading }= useDeletePost(id);
+    const {deletePost, isLoading:deleteLoading }= useDeletePost({id});
     const { comments, isLoading: commentsLoading } = useComments(id);
 
     return (
@@ -42,17 +42,16 @@ export default function Actions({ post }) {
                 />
                 {comments?.length}
             </Flex>
-            <Flex alignItems={"center"} marginLeft={"2"}>
-                <IconButton
-                    //onClick={deletePost}
+              {!userLoading && (user.id === uid)  &&  
+              (<IconButton
+                    onClick={deletePost}
                     marginLeft={"auto"}
-                    //isLoading={deleteLoading}
+                    isLoading={deleteLoading}
                     size={"md"}
                     colorScheme={"black"}
                     variant={"ghost"}
                     icon={<FaRegTrashAlt /> }
                     isRound
-                />
-            </Flex>
+                />)}
         </Flex>)
 }
