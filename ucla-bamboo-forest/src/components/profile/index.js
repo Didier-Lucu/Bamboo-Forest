@@ -17,12 +17,12 @@ export default function Profile() {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     if (userLoading) return "Loading...";
-    
+
     return (
         <Stack spacing="5">
             <Flex p={["4", "6"]} pos="relative" align="center">
                 <Avatar size="xl" user={user} />
-                
+
                 {!authLoading && (authUser.id === user.id) &&
                     <Button pos="absolute" mb="2" top="6" right="6" colorScheme="blue" onClick={onOpen}>
                         Change Profile Picture
@@ -36,21 +36,20 @@ export default function Profile() {
                             Posts: {posts.length}
                         </Text>
                         <Text color="gray.700" fontSize={["sm", "lg"]}>
-                            Likes: {posts.map(post => post.likes.length).reduce((result,number)=> result+number)}
+                            Likes: {posts.map(post => post.likes.length).reduce((result, number) => result + number, 0)}
                         </Text>
                         <Text color="gray.700" fontSize={["sm", "lg"]}>
                             Joined: {format(user.date, "MMMM YYY")}
                         </Text>
-                        
                     </HStack>
                 </Stack>
 
                 <EditProfile isOpen={isOpen} onClose={onClose} />
             </Flex>
             <Divider />
-            {postsLoading ? 
-            <Text>Posts are loading...</Text> : 
-            <PostsLists posts={posts} />}
+            {postsLoading ?
+                <Text>Posts are loading...</Text> :
+                <PostsLists posts={posts} />}
         </Stack>
     );
 }
