@@ -21,8 +21,11 @@ export default function PostLists({ posts }) {
   };
 
   function sortedPosts(posts) {
-    if (sortBy === "most-recent") {
-      return posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    if (sortBy === "newest") {
+      return posts.sort((a, b) => b.date - a.date);
+    }
+    else if (sortBy === "oldest") {
+      return posts.sort((a, b) => a.date - b.date);
     }
     else if (sortBy === "category") {
       return posts.sort(compareCategories);
@@ -46,10 +49,11 @@ export default function PostLists({ posts }) {
             Sort by {sortBy === "" ? "(Default)" : ""}
           </MenuButton>
           <MenuList>
-            <MenuItem onClick={() => setSortBy("most-recent")}>Sort by Date</MenuItem>
+            <MenuItem onClick={() => setSortBy("newest")}>Newest to Oldest</MenuItem>
+            <MenuItem onClick={() => setSortBy("oldest")}>Oldest to Newest</MenuItem>
             <MenuItem onClick={() => setSortBy("category")}>Sort by Category</MenuItem>
-            <MenuItem onClick={() => setSortBy("most-popular")}>Sort by Most Likes</MenuItem>
-            <MenuItem onClick={() => setSortBy("least-popular")}>Sort by Least Likes</MenuItem>
+            <MenuItem onClick={() => setSortBy("most-popular")}>Most Popular</MenuItem>
+            <MenuItem onClick={() => setSortBy("least-popular")}>Least Popular</MenuItem>
           </MenuList>
         </Menu>
       </Box>
