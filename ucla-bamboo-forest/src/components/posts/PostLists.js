@@ -14,15 +14,24 @@ import Post from "./index";
 export default function PostLists({ posts }) {
   const [sortBy, setSortBy] = useState("");
 
+  const compareCategories = (a, b) => {
+    const aCat = a.category.join("");
+    const bCat = b.category.join("");
+    return aCat.localeCompare(bCat);
+  };
+
   function sortedPosts(posts) {
-    if (sortBy === "most-popular") {
+    if (sortBy === "most-recent") {
+      return posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+    else if (sortBy === "category") {
+      return posts.sort(compareCategories);
+    }
+    else if (sortBy === "most-popular") {
       return posts.sort((a, b) => b.likes.length - a.likes.length);
     }
     else if (sortBy === "least-popular") {
       return posts.sort((a, b) => a.likes.length - b.likes.length);
-    }
-    else if (sortBy === "most-recent") {
-      return posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     }
     else {
       return posts;
@@ -38,7 +47,7 @@ export default function PostLists({ posts }) {
           </MenuButton>
           <MenuList>
             <MenuItem onClick={() => setSortBy("most-recent")}>Sort by Date</MenuItem>
-            <MenuItem>Sort by Category</MenuItem>
+            <MenuItem onClick={() => setSortBy("category")}>Sort by Category</MenuItem>
             <MenuItem onClick={() => setSortBy("most-popular")}>Sort by Most Likes</MenuItem>
             <MenuItem onClick={() => setSortBy("least-popular")}>Sort by Least Likes</MenuItem>
           </MenuList>
