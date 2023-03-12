@@ -1,0 +1,68 @@
+import React, { useState } from "react";
+import { Input, VStack, Box, Text, Link } from "@chakra-ui/react";
+import { useAllUsers } from "hooks/users"
+import { PROTECTED } from "lib/router";
+import { Link as RouterLink } from "react-router-dom";
+
+
+export default function SearchBar() {
+    
+  const { users, isLoading: usersLoading } = useAllUsers();
+  const [ filteredUsers, setFilteredUsers ] = useState([]);
+
+  const handleFilter = (event) => {
+    const searchTerm = event.target.value;
+    const newFilter = users.filter((user) => {
+      return user.username.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+    if (searchTerm === "") {
+      setFilteredUsers([]);
+    } else {
+      setFilteredUsers(newFilter);
+    }
+  };
+  
+    return(
+      <VStack mr="150" align="left" height="100%" mt="5">
+        <Input
+          placeholder="Search For Users"
+          size="md"
+          variant="filled"
+          htmlSize={60}
+          width="auto"
+          onChange={handleFilter}
+        />
+        {filteredUsers?.length !== 0 && (
+          <Box 
+            pt="2"
+            pb="2"
+            pl="5" 
+            pr="5"
+            minH="140" 
+            bg="white"  
+            overflowY="auto" 
+            borderWidth="1px" 
+            borderColor="gray.300"
+            sx={{ '::-webkit-scrollbar':{display:'none'} }}
+            >
+            <VStack>
+              {usersLoading ? (
+                <Text>Loading Users...</Text>
+              ) : (
+                filteredUsers?.map((user) => 
+                  <Link 
+                    p="1" 
+                    borderBottomWidth="1px" 
+                    borderColor="gray.200" 
+                    width="100%"
+                    as={RouterLink}
+                    to={`${PROTECTED}/profile/${user?.id}`}>
+                      {user.username}
+                  </Link>)
+              )}
+            </VStack>
+          </Box>
+        )}
+      </VStack>
+    )
+}
