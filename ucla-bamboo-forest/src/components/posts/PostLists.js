@@ -21,6 +21,9 @@ export default function PostLists({ posts }) {
     else if (sortBy === "least-popular") {
       return posts.sort((a, b) => a.likes.length - b.likes.length);
     }
+    else if (sortBy === "most-recent") {
+      return posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
     else {
       return posts;
     }
@@ -34,7 +37,7 @@ export default function PostLists({ posts }) {
             Sort by {sortBy === "" ? "(Default)" : ""}
           </MenuButton>
           <MenuList>
-            <MenuItem>Sort by Date</MenuItem>
+            <MenuItem onClick={() => setSortBy("most-recent")}>Sort by Date</MenuItem>
             <MenuItem>Sort by Category</MenuItem>
             <MenuItem onClick={() => setSortBy("most-popular")}>Sort by Most Likes</MenuItem>
             <MenuItem onClick={() => setSortBy("least-popular")}>Sort by Least Likes</MenuItem>
