@@ -52,6 +52,7 @@ export default function Login() {
                 w={'full'}
                 maxW={'md'}
                 mt={2}
+                mb={2}
                 variant={'outline'}
                 leftIcon={<FcGoogle />}
                 onClick={() => handleSocialLogin('google')}
