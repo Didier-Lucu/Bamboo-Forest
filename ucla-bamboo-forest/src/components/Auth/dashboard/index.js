@@ -77,7 +77,11 @@ function NewPost() {
 
   return (
     <Box maxWidth={"600px"} margin={"auto"} paddingY={"20"}>
-      <form onSubmit={handleSubmit(handleAddPost)}>
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        setFile(null);
+        handleSubmit(handleAddPost)();
+        }}>
         <HStack justify={"space-between"}>
           <Heading size={"lg"}>What's on your mind?</Heading>
           <Button

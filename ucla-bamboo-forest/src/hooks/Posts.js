@@ -1,5 +1,5 @@
 import { position, useToast } from "@chakra-ui/react";
-import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "@firebase/storage";
 import { uuidv4 } from "@firebase/util";
 import {
   arrayRemove,
@@ -24,7 +24,6 @@ import {
 export function useAddPost() {
   
     const [isLoading, setLoading] = useState(false);
-    //const [ file, setFile ] = useState(null);
     const toast = useToast();
     async function addPost(post) {
         setLoading(true);
@@ -99,10 +98,12 @@ export function useDeletePost({ id }) {
       setLoading(true);
 
       await deleteDoc(doc(db, "posts", id));
-
       const q = query(collection(db, "comments"), where("postID", "==", id));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach(async (doc) => deleteDoc(doc.ref));
+      console.log("postImages/" + id)
+      await deleteObject(ref(storage, "postImages/" + id));
+      
 
       toast({
         title: "Post Deleted",
