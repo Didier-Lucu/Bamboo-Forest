@@ -1,12 +1,28 @@
-import { useToast } from "@chakra-ui/react";
+import { position, useToast } from "@chakra-ui/react";
 import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
 import { uuidv4 } from "@firebase/util";
-import { arrayRemove, arrayUnion, collection, doc, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { db, storage } from "lib/firebase";
 import { useState } from "react";
-import { useCollectionData, useDocumentData } from "react-firebase-hooks/firestore"
+import {
+  useCollectionData,
+  useDocumentData,
+} from "react-firebase-hooks/firestore";
 
 export function useAddPost() {
+  
     const [isLoading, setLoading] = useState(false);
     //const [ file, setFile ] = useState(null);
     const toast = useToast();
@@ -39,8 +55,6 @@ export function useAddPost() {
             likes: [],
             image: file,
         });
-       // const docRef = doc(db, "posts", id)
-      //  await updateDoc(docRef, { iceimage: file })
         
         toast({
             title: 'Post Added',
@@ -59,40 +73,68 @@ export function useAddPost() {
   
 
 
-export function useToggleLike({id, isLiked, uid}) {
-    const [isLoading, setLoading] = useState(false);
+export function useToggleLike({ id, isLiked, uid }) {
+  const [isLoading, setLoading] = useState(false);
 
-    async function toggleLike() {
-        setLoading(true);
-        const docRef = doc(db, "posts", id)
-        await updateDoc(docRef, {
-            likes: isLiked ? arrayRemove(uid) : arrayUnion(uid),
-        });
-        setLoading(false);
-    }
+  async function toggleLike() {
+    setLoading(true);
+    const docRef = doc(db, "posts", id);
+    await updateDoc(docRef, {
+      likes: isLiked ? arrayRemove(uid) : arrayUnion(uid),
+    });
+    setLoading(false);
+  }
 
-    return { toggleLike, isLoading };
+  return { toggleLike, isLoading };
 }
 
-export function useDeletePost({id}) {
+export function useDeletePost({ id }) {
+  const [isLoading, setLoading] = useState(false);
+  const toast = useToast();
 
-    const  [isLoading, setLoading] = useState(false);
+  async function deletePost() {
+    const confirm = window.confirm("Are you sure you want to delete?");
 
-    async function deletePost() {}
+    if (confirm) {
+      setLoading(true);
 
-    return {deletePost, isLoading};
+      await deleteDoc(doc(db, "posts", id));
+
+      const q = query(collection(db, "comments"), where("postID", "==", id));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (doc) => deleteDoc(doc.ref));
+
+      toast({
+        title: "Post Deleted",
+        status: "info",
+        position: "top",
+        duration: "5000",
+        isClosable: true,
+      });
+
+      setLoading(false);
+    }
+  }
+
+  return { deletePost, isLoading };
 }
 
 export function usePost(id) {
-    const q = doc(db, "posts", id);
-    const [post, isLoading] = useDocumentData(q);
+  const q = doc(db, "posts", id);
+  const [post, isLoading] = useDocumentData(q);
 
-    return { post, isLoading };
+  return { post, isLoading };
 }
 
 export function usePosts(uid = null) {
-    const q = uid ? query(collection(db, "posts"), orderBy('date', 'desc'), where('uid', '==', uid)) : query(collection(db, "posts"), orderBy('date', 'desc'))
-    const [posts, isLoading, error] = useCollectionData(q);
-    if (error) throw error;
-    return { posts, isLoading };
+  const q = uid
+    ? query(
+      collection(db, "posts"),
+      orderBy("date", "desc"),
+      where("uid", "==", uid)
+    )
+    : query(collection(db, "posts"), orderBy("date", "desc"));
+  const [posts, isLoading, error] = useCollectionData(q);
+  if (error) throw error;
+  return { posts, isLoading };
 }

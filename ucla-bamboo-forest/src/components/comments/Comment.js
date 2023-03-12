@@ -28,10 +28,17 @@ export default function Comment({ comment }) {
                    {formatDistanceToNow(date)} ago
                   </Text>
                 </Box>
+              </Flex>
+              <Flex justifyContent="space-between">
+              <Box pt="2" fontSize="sm">
+                <Text maxWidth={"100%"} overflowWrap="break-word" wordBreak={"break-all"}> { text }  </Text>
+              </Box>
+        
+                </Flex>
                 { !authLoading && authUser.id === uid && (
                   <IconButton
                     size="sm"
-                    ml="auto"
+                    marginLeft={"94%"}
                     icon={<FaTrash />}
                     colorScheme="red"
                     variant="ghost"
@@ -40,10 +47,6 @@ export default function Comment({ comment }) {
                     isLoading={deleteLoading}
                   />
                 )}
-              </Flex>
-              <Box pt="2" fontSize="sm">
-                <Text>{ text }</Text>
-              </Box>
             </Box>
           </Flex>
         </Box>

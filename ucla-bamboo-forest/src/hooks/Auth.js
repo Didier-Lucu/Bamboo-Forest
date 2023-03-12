@@ -2,11 +2,12 @@ import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { auth, db } from "lib/firebase";
 import { useEffect, useState } from "react";
 import { DASHBOARD, LOGIN } from "lib/router";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import isUserNameExists from "utils/userNameExist";
+import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 
 export function useAuth() {
     const [authUser, authenticating, error] = useAuthState(auth);
@@ -76,6 +77,70 @@ export function useLogin() {
 
     return { login, isLoading };
 }
+
+export function useSocialLogin() {
+    const [isLoading, setLoading] = useState(false);
+    const toast = useToast();
+    const navigate = useNavigate();
+    const randomName = uniqueNamesGenerator({
+        dictionaries: [adjectives, colors, animals]
+    });
+
+
+    async function socialLogin({ redirectTo = DASHBOARD, providerType }) {
+        setLoading(true);
+
+        let provider;
+        if (providerType === "google") {
+            provider = new GoogleAuthProvider();
+        } else {
+            throw new Error(`Unsupported provider type: ${providerType}`);
+        }
+
+        try {
+            const result = await signInWithPopup(auth, provider);
+
+            // Check if the user already exists in the "users" collection
+            const userRef = doc(db, "users", result.user.uid);
+            const userDoc = await getDoc(userRef);
+
+            if (!userDoc.exists()) {
+                // Create a new entry for the user in the "users" collection
+                await setDoc(userRef, {
+                    id: result.user.uid,
+                    username: randomName,
+                    profilePhoto: "",
+                    date: Date.now(),
+                });
+            }
+
+            toast({
+                title: "Logged in successfully",
+                status: "success",
+                duration: 3000,
+                position: "top",
+                isClosable: true,
+            });
+            navigate(redirectTo);
+        } catch (error) {
+            toast({
+                title: "Error logging in",
+                description: error.message,
+                status: "error",
+                duration: 3000,
+                position: "top",
+                isClosable: true,
+            });
+            setLoading(false);
+            return false;
+        }
+        setLoading(false);
+        return true;
+    }
+
+    return { socialLogin, isLoading };
+}
+
 
 export function useLogOut() {
     const [signOut, isLoading, error] = useSignOut(auth);
