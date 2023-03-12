@@ -47,12 +47,12 @@ export default function Profile() {
           <Text fontSize="xl">{user.username}</Text>
           <HStack spacing="10">
             <Text color="gray.700" fontSize={["sm", "lg"]}>
-              Posts: {posts.length}
+              Posts: {posts?.length}
             </Text>
             <Text color="gray.700" fontSize={["sm", "lg"]}>
               Likes:{" "}
               {posts
-                .map((post) => post.likes.length)
+                ?.map((post) => post.likes.length)
                 .reduce((result, number) => result + number, 0)}
             </Text>
             <Text color="gray.700" fontSize={["sm", "lg"]}>
