@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Input, VStack, Box, Text } from "@chakra-ui/react";
+import { Input, VStack, Box, Text, Link } from "@chakra-ui/react";
 import { useAllUsers } from "hooks/users"
+import { PROTECTED } from "lib/router";
+import { Link as RouterLink } from "react-router-dom";
 
 
 export default function SearchBar() {
@@ -32,21 +34,33 @@ export default function SearchBar() {
         />
         {filteredUsers?.length !== 0 && (
           <Box 
+            pt="2"
+            pb="2"
             pl="5" 
             pr="5"
             minH="140" 
             bg="white"  
             overflowY="auto" 
             borderWidth="1px" 
-            borderColor="black"
+            borderColor="gray.300"
             sx={{ '::-webkit-scrollbar':{display:'none'} }}
             >
-            {usersLoading ? (
-              <Text>Loading Users...</Text>
-            ) : (
-              filteredUsers?.map((user) => 
-                <Box margin="3" borderBottomWidth="1px" borderColor="gray.200">{user.username}</Box>)
-            )}
+            <VStack>
+              {usersLoading ? (
+                <Text>Loading Users...</Text>
+              ) : (
+                filteredUsers?.map((user) => 
+                  <Link 
+                    p="1" 
+                    borderBottomWidth="1px" 
+                    borderColor="gray.200" 
+                    width="100%"
+                    as={RouterLink}
+                    to={`${PROTECTED}/profile/${user?.id}`}>
+                      {user.username}
+                  </Link>)
+              )}
+            </VStack>
           </Box>
         )}
       </VStack>
