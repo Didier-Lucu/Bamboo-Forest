@@ -16,8 +16,8 @@ export default function Post({ post }) {
                         {text}
                     </Text>
                     { image != null && (
-                    <Box display="flex" marginTop={"25px"} marginBottom={"5px"}>
-                        <Image width="350px" height={"250px"} src= {image} />
+                    <Box  display="flex" marginTop={"25px"} marginBottom={"5px"}>
+                        <Image width="350px" objectFit="contain" height={"250px"} src= {image} />
                     </Box>
                     )}
                 </Box>

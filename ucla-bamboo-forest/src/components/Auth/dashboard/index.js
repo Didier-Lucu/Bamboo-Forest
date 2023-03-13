@@ -136,7 +136,7 @@ function NewPost() {
 
             <div style={{ display: 'flex', marginLeft: 'auto'}}>
               <Button size="sm" as="label" htmlFor="file-input"> 
-                Upload
+                Upload Image
                 <input
                   id="file-input"
                   type="file"
