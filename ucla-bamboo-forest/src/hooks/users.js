@@ -13,10 +13,10 @@ export function useUser(id) {
 }
 
 export function useAllUsers() {
-    const q = query(collection(db, "users"));
-    const [users, isLoading, error] = useCollectionData(q);
-    if (error) throw error;
-    return { users, isLoading }
+  const q = query(collection(db, "users"));
+  const [users, isLoading, error] = useCollectionData(q);
+  if (error) throw error;
+  return { users, isLoading }
 }
 
 export function useUpdateAvatar(uid) {

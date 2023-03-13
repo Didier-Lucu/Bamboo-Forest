@@ -4,7 +4,7 @@ import Actions from "./Actions";
 
 
 export default function Post({ post }) {
-    const {  text } = post;
+    const { text } = post;
     return (
         <Box p={"2"} maxWidth={"600px"} textAlign={"left"}>
             <Box border={"2px solid"} borderColor={"gray.100"} borderRadius={"md"}>
@@ -14,7 +14,7 @@ export default function Post({ post }) {
                         {text}
                     </Text>
                 </Box>
-                <Actions post={post}/>
+                <Actions post={post} />
             </Box>
         </Box>
     );

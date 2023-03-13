@@ -28,9 +28,12 @@ export default function Navbar() {
                 <Link ml="8" color="black" as={RouterLink} to={`${PROTECTED}/profile/${user?.id}`} fontWeight="bold">
                     Profile
                 </Link>
-                <Spacer/>
-                <SearchBar/>
-                <Spacer/>
+                <Link ml="8" color="black" as={RouterLink} to={`${PROTECTED}/users`} fontWeight="bold">
+                    All Users
+                </Link>
+                <Spacer />
+                <SearchBar />
+                <Spacer />
                 <Button
                     ml="auto"
                     colorScheme="blue"
