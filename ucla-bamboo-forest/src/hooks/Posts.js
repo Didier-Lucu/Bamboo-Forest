@@ -1,4 +1,5 @@
 import { position, useToast } from "@chakra-ui/react";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "@firebase/storage";
 import { uuidv4 } from "@firebase/util";
 import {
   arrayRemove,
@@ -13,7 +14,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { db } from "lib/firebase";
+import { db, storage } from "lib/firebase";
 import { useState } from "react";
 import {
   useCollectionData,
@@ -21,29 +22,55 @@ import {
 } from "react-firebase-hooks/firestore";
 
 export function useAddPost() {
-  const [isLoading, setLoading] = useState(false);
-  const toast = useToast();
+  
+    const [isLoading, setLoading] = useState(false);
+    const toast = useToast();
+    async function addPost(post) {
+        setLoading(true);
+        const id = uuidv4();
+        const file = await imageUpload(id)
 
-  async function addPost(post) {
-    setLoading(true);
-    const id = uuidv4();
-    await setDoc(doc(db, "posts", id), {
-      ...post,
-      id,
-      date: Date.now(),
-      likes: [],
-    });
-    toast({
-      title: "Post Added",
-      status: "success",
-      duration: 2000,
-      position: "top",
-      isClosable: true,
-    });
-    setLoading(false);
-  }
-  return { addPost, isLoading };
+        async function imageUpload(id) {
+            if (!post.image) {
+
+                return;
+            }
+    
+            const fileRef = ref(storage, "postImages/" + id);
+            await uploadBytes(fileRef, post.image);
+            const file = await getDownloadURL(fileRef)
+    
+            toast({ title: "Image uploaded!", status: "success",
+                isClosable: true, position: "top", duration: 5000 });
+    
+                
+            return file
+        }
+        await setDoc(doc(db, "posts", id), {
+            uid: post.uid,
+            text: post.text,
+            id,
+            date: Date.now(),
+            likes: [],
+            image: file,
+        });
+        
+        toast({
+            title: 'Post Added',
+            status: 'success',
+            duration: 2000,
+            position: "top",
+            isClosable: true,
+        })
+        
+        setLoading(false)
+    }
+    return { addPost, isLoading };
 }
+
+
+  
+
 
 export function useToggleLike({ id, isLiked, uid }) {
   const [isLoading, setLoading] = useState(false);
@@ -71,10 +98,12 @@ export function useDeletePost({ id }) {
       setLoading(true);
 
       await deleteDoc(doc(db, "posts", id));
-
       const q = query(collection(db, "comments"), where("postID", "==", id));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach(async (doc) => deleteDoc(doc.ref));
+      console.log("postImages/" + id)
+      await deleteObject(ref(storage, "postImages/" + id));
+      
 
       toast({
         title: "Post Deleted",
