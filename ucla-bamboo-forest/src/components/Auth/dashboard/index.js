@@ -11,7 +11,7 @@ function NewPost() {
   const { register, handleSubmit, reset } = useForm();
   const { addPost, isLoading: addingPost } = useAddPost();
   const { user, isLoading: authLoading } = useAuth();
-  const [ file, setFile ] = useState(null);
+  const [file, setFile] = useState(null);
   const [categories, setCategories] = useState([
     "General",
     "Tech",
@@ -66,7 +66,7 @@ function NewPost() {
         e.preventDefault();
         setFile(null);
         handleSubmit(handleAddPost)();
-        }}>
+      }}>
         <HStack justify={"space-between"}>
           <Heading size={"lg"}>What's on your mind?</Heading>
           <Button
@@ -111,16 +111,16 @@ function NewPost() {
               >
                 {category}
 
-                
+
               </Button>
             ))}
             <Button size="sm" onClick={handleAddCategory}>
               +
             </Button>
-          </HStack>
 
-            <div style={{ display: 'flex', marginLeft: 'auto'}}>
-              <Button size="sm" as="label" htmlFor="file-input"> 
+
+            <div style={{ display: 'flex', marginLeft: 'auto' }}>
+              <Button size="sm" as="label" htmlFor="file-input">
                 Upload Image
                 <input
                   id="file-input"
@@ -131,24 +131,25 @@ function NewPost() {
                 />
               </Button>
             </div>
+          </HStack>
           {file && (
-        <HStack spacing={2} mt={2} justifyContent="space-between">
-          <Button
-            backgroundColor={theme.colors.red[400]}
-            ml={"430px"}
-            size="sm"
-            marginRight={2}
-            onClick={() => {
-              setFile(null);
-            }}
-          >
-            Delete
-          </Button>
-          <div style={{ marginLeft: 'auto', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', textAlign: 'right'}}>{file.name}</div>
-        </HStack>
-      )}
-    
-              
+            <HStack spacing={2} mt={2} justifyContent="space-between">
+              <Button
+                backgroundColor={theme.colors.red[400]}
+                ml={"430px"}
+                size="sm"
+                marginRight={2}
+                onClick={() => {
+                  setFile(null);
+                }}
+              >
+                Delete
+              </Button>
+              <div style={{ marginLeft: 'auto', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', textAlign: 'right' }}>{file.name}</div>
+            </HStack>
+          )}
+
+
         </Box>
       </form>
     </Box>
