@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Input, VStack, Box, Text, Link } from "@chakra-ui/react";
+import { Input, InputGroup, VStack, Box, Text, Link, InputRightElement } from "@chakra-ui/react";
 import { useAllUsers } from "hooks/users";
 import { PROTECTED } from "lib/router";
 import { Link as RouterLink } from "react-router-dom";
-import { set } from "date-fns";
+import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
 
 export default function SearchBar() {
   const { users, isLoading: usersLoading } = useAllUsers();
@@ -30,15 +30,24 @@ export default function SearchBar() {
 
   return (
     <VStack mr="auto" align="left" height="100%" mt="5">
-      <Input
-        placeholder="Search For Users"
-        size="md"
-        variant="filled"
-        htmlSize={60}
-        width="auto"
-        onChange={handleFilter}
-        value={searchInput}
-      />
+      <InputGroup>
+        <Input
+          placeholder="Search For Users"
+          size="md"
+          variant="filled"
+          htmlSize={60}
+          width="auto"
+          onChange={handleFilter}
+          value={searchInput}
+        />
+        <InputRightElement
+          children={searchInput?.length === 0 ? (
+            <SearchIcon color="gray.500"/>
+          ) : (
+            <CloseIcon color="gray.500" onClick={clearSearchBar}/>
+          )}
+        />
+      </InputGroup>
       {filteredUsers?.length !== 0 && (
         <Box
           pt="2"
