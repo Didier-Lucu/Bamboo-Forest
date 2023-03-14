@@ -3,13 +3,16 @@ import { Input, VStack, Box, Text, Link } from "@chakra-ui/react";
 import { useAllUsers } from "hooks/users";
 import { PROTECTED } from "lib/router";
 import { Link as RouterLink } from "react-router-dom";
+import { set } from "date-fns";
 
 export default function SearchBar() {
   const { users, isLoading: usersLoading } = useAllUsers();
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [searchInput, setSearchInput] = useState("")
 
   const handleFilter = (event) => {
     const searchTerm = event.target.value;
+    setSearchInput(searchTerm);
     const newFilter = users.filter((user) => {
       return user.username.toLowerCase().includes(searchTerm.toLowerCase());
     });
@@ -20,6 +23,11 @@ export default function SearchBar() {
     }
   };
 
+  const clearSearchBar = () => {
+    setFilteredUsers([]);
+    setSearchInput("");
+  }
+
   return (
     <VStack mr="auto" align="left" height="100%" mt="5">
       <Input
@@ -29,6 +37,7 @@ export default function SearchBar() {
         htmlSize={60}
         width="auto"
         onChange={handleFilter}
+        value={searchInput}
       />
       {filteredUsers?.length !== 0 && (
         <Box
@@ -55,6 +64,7 @@ export default function SearchBar() {
                   width="100%"
                   as={RouterLink}
                   to={`${PROTECTED}/profile/${user?.id}`}
+                  onClick={clearSearchBar}
                 >
                   {user.username}
                 </Link>
