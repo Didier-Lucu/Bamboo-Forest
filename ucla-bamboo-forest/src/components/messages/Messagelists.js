@@ -16,7 +16,7 @@ export default function MessageLists({ messages }) {
   
   return (
 
-    <VStack>
+    <VStack justifyContent="space-between">
       <Box
         width={"1000px"}
         position={"fixed"}
@@ -51,7 +51,7 @@ export default function MessageLists({ messages }) {
       
      </HStack>
      </Box>
-    <Box  align={"center"} marginTop={"10px"}>
+    <Box  align={"center"} marginTop={"40px"}>
       {messages?.length === 0 ? (
         <Text textAlign={"center"} fontSize={"xl"} fontWeight={"bold"}>
           No Messages Yet
