@@ -33,7 +33,7 @@ export function useAddPost() {
         async function imageUpload(id) {
             if (!post.image) {
 
-                return;
+                return null;
             }
     
             const fileRef = ref(storage, "postImages/" + id);
