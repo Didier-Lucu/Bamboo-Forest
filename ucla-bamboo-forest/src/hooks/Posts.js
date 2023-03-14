@@ -47,12 +47,14 @@ export function useAddPost() {
             return file
         }
         await setDoc(doc(db, "posts", id), {
+            ...post,
             uid: post.uid,
             text: post.text,
             id,
             date: Date.now(),
             likes: [],
             image: file,
+            
         });
         
         toast({
