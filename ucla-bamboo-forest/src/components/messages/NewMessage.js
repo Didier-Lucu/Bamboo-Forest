@@ -1,15 +1,15 @@
-import React from "react";
 import { Box, Button, HStack, Textarea } from "@chakra-ui/react";
 import { useAuth } from "hooks/Auth";
 import { useForm } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
-import { useAddMessage, useMessages } from "hooks/Messages";
+import { useAddMessage } from "hooks/Messages";
 
 export default function NewMessage({ id2 }) {
     const { register, handleSubmit, reset } = useForm();
     const { addMessage, isLoading: addingMessage } = useAddMessage();
     const { user, isLoading: authLoading } = useAuth();
-  
+
+
     function handleAddMessage(data) {
       addMessage({
         seid: user.id,
@@ -18,8 +18,10 @@ export default function NewMessage({ id2 }) {
       } );
       reset();
     }
+
     return (
-      <Box maxWidth={"600px"} margin={"auto"} paddingY={"20"}>
+
+      <Box maxWidth={"600px"} margin={"auto"} paddingY={"2"}>
         <form onSubmit={(e) => {
           e.preventDefault();
           handleSubmit(handleAddMessage)();
@@ -45,5 +47,6 @@ export default function NewMessage({ id2 }) {
           </HStack>
         </form>
       </Box>
+      
     );
   }
