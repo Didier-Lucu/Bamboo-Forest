@@ -3,7 +3,7 @@ import { uuidv4 } from "@firebase/util";
 import { collection, doc, orderBy, query, setDoc, where, and } from "firebase/firestore";
 import { db } from "lib/firebase";
 import { useState } from "react";
-import { useCollection, useCollectionData } from "react-firebase-hooks/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
 export function useAddMessage() {
     const [isLoading, setLoading] = useState(false);

@@ -1,7 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import { useAuth } from "hooks/Auth";
 import { useParams } from "react-router-dom";
-import Message from "./index";
 
 export default function MessageLists({ messages }) {
   const { id1, id2 } = useParams();

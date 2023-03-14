@@ -3,8 +3,6 @@ import { Box, Button, HStack, Textarea } from "@chakra-ui/react";
 import { useAuth } from "hooks/Auth";
 import { useForm } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
-import MessageLists from "./Messagelists";
-import { useParams } from "react-router-dom";
 import { useAddMessage, useMessages } from "hooks/Messages";
 
 export default function NewMessage({ id2 }) {
