@@ -26,12 +26,12 @@ export default function Layout() {
     return (
         <>
             <Navbar />
-            <Flex pt="16" pb="12" mx="auto" w="full" maxW="1200px">
-                <Box w="1100px">
+            <Flex pt="16" pb="12" mx="auto" w="full" maxW="1200px" justifyContent="center" alignItems="center">
+                <Box w="1100px" mx="auto">
                     <Outlet />
                 </Box>
             </Flex>
-            
+
         </>
     );
 }
