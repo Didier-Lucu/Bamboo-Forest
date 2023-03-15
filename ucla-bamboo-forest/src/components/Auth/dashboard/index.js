@@ -6,19 +6,14 @@ import { useAddPost, usePosts } from "hooks/Posts";
 import { useForm } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
 import theme from "./theme";
+import { useCategories } from "hooks/Categories";
 
 function NewPost() {
   const { register, handleSubmit, reset } = useForm();
   const { addPost, isLoading: addingPost } = useAddPost();
   const { user, isLoading: authLoading } = useAuth();
+  const { categories, getCategories, addCategory } = useCategories();
   const [file, setFile] = useState(null);
-  const [categories, setCategories] = useState([
-    "General",
-    "Tech",
-    "Food",
-    "Clubs",
-    "Housing",
-  ]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -36,11 +31,16 @@ function NewPost() {
 
   const handleAddCategory = () => {
     const newCategory = prompt("Create a new category");
-    if (newCategory && !categories.includes(newCategory)) {
-      setCategories([...categories, newCategory]);
-      setSelectedCategories([...selectedCategories, newCategory]);
+    if (newCategory) {
+      addCategory(newCategory).then(() => {
+        setSelectedCategories([...selectedCategories, newCategory]);
+      });
     }
   };
+  
+  useEffect(() => {
+    getCategories();
+  }, [getCategories]);
 
   useEffect(() => {
     setIsFormValid(selectedCategories.length > 0);
@@ -58,7 +58,6 @@ function NewPost() {
   function handleChange(e) {
     setFile(e.target.files[0]);
   }
-
 
   return (
     <Box maxWidth={"600px"} margin={"auto"} paddingY={"10"}>
@@ -101,17 +100,15 @@ function NewPost() {
           <HStack>
             {categories.map((category) => (
               <Button
-                key={category}
+                key={category.id}
                 size="sm"
                 colorScheme={
-                  selectedCategories.includes(category) ? "red" : "gray"
+                  selectedCategories.includes(category.name) ? "red" : "gray"
                 }
                 onClick={handleCategoryChange}
-                value={category}
+                value={category.name}
               >
-                {category}
-
-
+                {category.name}
               </Button>
             ))}
             <Button size="sm" onClick={handleAddCategory}>
