@@ -26,7 +26,7 @@ export default function User({ user, curid }) {
                     to={`${PROTECTED}/profile/${id}`}
                     size="sm"
                     variant="link"
-                    colorScheme="teal"
+                    colorScheme="yellow"
                 >
                     View Profile
                 </Button>
@@ -37,7 +37,7 @@ export default function User({ user, curid }) {
                     to={`${PROTECTED}/messages/${curid}/${id}`}
                     size="sm"
                     variant="link"
-                    colorScheme="teal"
+                    colorScheme="yellow"
                     ml={"50px"}
                 >
                     Message
