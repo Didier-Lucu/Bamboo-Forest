@@ -28,7 +28,7 @@ export default function Profile() {
   return (
     <Stack spacing="5">
       <Flex p={["4", "6"]} pos="relative" align="center">
-        <Avatar size="xl" user={user} />
+        <Avatar size="2xl" user={user} />
 
         {!authLoading && authUser.id === user.id && (
           <Button
@@ -44,18 +44,18 @@ export default function Profile() {
         )}
 
         <Stack ml="10">
-          <Text fontSize="xl">{user.username}</Text>
+          <Text fontSize="2xl">{user.username}</Text>
           <HStack spacing="10">
-            <Text color="gray.700" fontSize={["sm", "lg"]}>
+            <Text color="gray.700" fontSize={"xl"}>
               Posts: {posts?.length}
             </Text>
-            <Text color="gray.700" fontSize={["sm", "lg"]}>
+            <Text color="gray.700" fontSize={"xl"}>
               Likes:{" "}
               {posts
                 ?.map((post) => post.likes.length)
                 .reduce((result, number) => result + number, 0)}
             </Text>
-            <Text color="gray.700" fontSize={["sm", "lg"]}>
+            <Text color="gray.700" fontSize={"xl"}>
               Joined: {format(user.date, "MMMM YYY")}
             </Text>
           </HStack>
