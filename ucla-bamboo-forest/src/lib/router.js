@@ -6,6 +6,7 @@ import Dashboard from "components/Auth/dashboard";
 import Comments from "components/comments";
 import Profile from "components/profile";
 import USERS from "components/Users";
+import Messages from "components/messages";
 
 export const ROOT = "/";
 export const LOGIN = "/login";
@@ -16,6 +17,7 @@ export const DASHBOARD = "/protected/dashboard";
 export const PROFILE = "/protected/profile/:id";
 export const COMMENTS = "/protected/comments/:id";
 export const ALLUSERS = "/protected/users";
+export const MESSAGESCOMMENTS = "/protected/messages/:id1/:id2";
 
 
 
@@ -30,6 +32,7 @@ export const router = createBrowserRouter([
             { path: PROFILE, element: <Profile />, },
             { path: COMMENTS, element: <Comments />, },
             { path: ALLUSERS, element: <USERS />, },
+            { path: MESSAGESCOMMENTS, element: <Messages />},
         ]
     },
 

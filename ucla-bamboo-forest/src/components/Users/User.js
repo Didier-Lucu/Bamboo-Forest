@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 import { PROTECTED } from "lib/router";
 import Avatar from "components/profile/Avatar";
 
-export default function User({ user }) {
-    const { id, username } = user;
+
+export default function User({ user, curid }) {
+    const { id, username} = user;
+    
+ 
 
     return (
         <VStack
@@ -17,15 +20,27 @@ export default function User({ user }) {
         >
             <Avatar user={user} />
             <Code>@{username}</Code>
-            <Link>
+            <Link justifyItems="space-between">
                 <Button
                     as={Link}
                     to={`${PROTECTED}/profile/${id}`}
                     size="sm"
                     variant="link"
-                    colorScheme="teal"
+                    colorScheme="yellow"
                 >
                     View Profile
+                </Button>
+
+                <Button
+                    
+                    as={Link}
+                    to={`${PROTECTED}/messages/${curid}/${id}`}
+                    size="sm"
+                    variant="link"
+                    colorScheme="yellow"
+                    ml={"50px"}
+                >
+                    Message
                 </Button>
             </Link>
         </VStack>

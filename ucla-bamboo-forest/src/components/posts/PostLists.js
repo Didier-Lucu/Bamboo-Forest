@@ -11,6 +11,7 @@ import {
   Checkbox,
   CheckboxGroup,
   VStack,
+  HStack,
 } from "@chakra-ui/react";
 import Post from "./index";
 import { useCategories } from "hooks/Categories";
@@ -81,6 +82,7 @@ export default function PostLists({ posts }) {
         </Text>
       ) : (
         <Box paddingX={"200px"} align={"center"}>
+          <HStack>
           <Box paddingX={"60px"} align={"left"}>
             <Menu>
               <MenuButton as={Button} rightIcon={<HamburgerIcon />}>
@@ -102,6 +104,19 @@ export default function PostLists({ posts }) {
               </MenuList>
             </Menu>
           </Box>
+          {sortBy === "newest" && (
+                <Box border="1px" borderColor="gray.200" px="1">Newest to Oldest</Box>
+              )}
+              {sortBy === "oldest" && (
+                <Box border="1px" borderColor="gray.200" px="1">Oldest to Newest</Box>
+              )}
+              {sortBy === "most-popular" && (
+                <Box border="1px" borderColor="gray.200" px="1">Most Popular</Box>
+              )}
+              {sortBy === "least-popular" && (
+                <Box border="1px" borderColor="gray.200" px="1">Least Popular</Box>
+              )} 
+           </HStack>
           <Box>
             {sorted.map((post) => (
               <Box key={post.id} mb={4}>
@@ -110,7 +125,5 @@ export default function PostLists({ posts }) {
             ))}
           </Box>
         </Box>
-      )}
-    </Box>
   )
 };

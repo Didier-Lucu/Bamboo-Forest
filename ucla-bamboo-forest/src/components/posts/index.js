@@ -12,7 +12,7 @@ export default function Post({ post }) {
             <Box border={"2px solid"} borderColor={"gray.100"} borderRadius={"md"}>
                 <Header post={post} />
                 <Box minHeight={"100px"}>
-                    <Text wordBreak={"break-word"} fontSize={"md"} marginTop={"2"}>
+                    <Text wordBreak={"break-word"} fontSize={"md"} marginTop={"2"}  marginLeft={"4"} marginRight={"4"}>
                         {text}
                     </Text>
                     { image != null && (

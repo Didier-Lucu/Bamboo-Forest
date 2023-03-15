@@ -51,7 +51,7 @@ export default function EditProfile({ isOpen, onClose }) {
     }
   }
 
-  if (authLoading) return "Loading...";
+  if (authLoading) return;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

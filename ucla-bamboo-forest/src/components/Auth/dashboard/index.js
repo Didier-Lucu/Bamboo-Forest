@@ -60,7 +60,7 @@ function NewPost() {
   }
 
   return (
-    <Box maxWidth={"600px"} margin={"auto"} paddingY={"20"}>
+    <Box maxWidth={"600px"} margin={"auto"} paddingY={"10"}>
       <form onSubmit={(e) => {
         e.preventDefault();
         setFile(null);
@@ -96,7 +96,7 @@ function NewPost() {
             (Select At Least One Category)
           </Heading>
         </HStack>
-        <Box mt={4}>
+        <Box mt={4} borderBottom="1px" borderColor="gray.200" pb="10">
           <HStack>
             {categories.map((category) => (
               <Button
