@@ -125,5 +125,7 @@ export default function PostLists({ posts }) {
             ))}
           </Box>
         </Box>
+      )}
+    </Box>
   )
 };
