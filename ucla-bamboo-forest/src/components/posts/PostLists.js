@@ -22,7 +22,7 @@ export default function PostLists({ posts }) {
 
   useEffect(() => {
     getCategories();
-  }, []);
+  }, [getCategories]);
 
   function sortedPosts(posts) {
     if (sortBy === "newest") {
@@ -53,30 +53,20 @@ export default function PostLists({ posts }) {
   }, {});
 
   return (
-    <Box display="flex">
-      <Box flex="1">
-        {sorted?.length === 0 ? (
-          <Text textAlign={"center"} fontSize={"xl"} fontWeight={"bold"}>
-            No Posts Yet
-          </Text>
-        ) : (
-          <Box paddingX={"200px"} align={"center"}>
-            {sorted.map((post) => (
-              <Post post={post} key={post.id} />
-            ))}
-          </Box>
-        )}
-      </Box>
-  
-      <VStack align="stretch" justify="center" spacing={4}>
+    <Box position="relative">
+      <VStack
+        position="absolute"
+        right={10}
+        top={10}
+        align="stretch"
+        justify="center"
+        spacing={4}
+      >
         <VStack align="stretch" spacing={2}>
           <Text fontSize="xl" fontWeight="bold">
             Category
           </Text>
-          <CheckboxGroup
-            value={selectedFilters}
-            onChange={(value) => setSelectedFilters(value)}
-          >
+          <CheckboxGroup value={selectedFilters} onChange={(value) => setSelectedFilters(value)}>
             {categories.map((category) => (
               <Checkbox key={category.id} value={category.name}>
                 {`${category.name} (${categoryCounts[category.name]})`}
@@ -84,32 +74,43 @@ export default function PostLists({ posts }) {
             ))}
           </CheckboxGroup>
         </VStack>
-  
-        <Box paddingX={"60px"} align={"left"}>
-          <Menu>
-            <MenuButton as={Button} rightIcon={<HamburgerIcon />}>
-              Sort by {sortBy === "" ? "(Default)" : ""}
-            </MenuButton>
-            <MenuList>
-              <MenuItem onClick={() => setSortBy("newest")}>
-                Newest to Oldest
-              </MenuItem>
-              <MenuItem onClick={() => setSortBy("oldest")}>
-                Oldest to Newest
-              </MenuItem>
-              <MenuItem onClick={() => setSortBy("category")}>
-                Sort by Category
-              </MenuItem>
-              <MenuItem onClick={() => setSortBy("most-popular")}>
-                Most Popular
-              </MenuItem>
-              <MenuItem onClick={() => setSortBy("least-popular")}>
-                Least Popular
-              </MenuItem>
-            </MenuList>
-          </Menu>
-        </Box>
       </VStack>
+      {sorted?.length === 0 ? (
+        <Text textAlign={"center"} fontSize={"xl"} fontWeight={"bold"}>
+          No Posts Yet
+        </Text>
+      ) : (
+        <Box paddingX={"200px"} align={"center"}>
+          <Box paddingX={"60px"} align={"left"}>
+            <Menu>
+              <MenuButton as={Button} rightIcon={<HamburgerIcon />}>
+                Sort by {sortBy === "" ? "(Default)" : ""}
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => setSortBy("newest")}>
+                  Newest to Oldest
+                </MenuItem>
+                <MenuItem onClick={() => setSortBy("oldest")}>
+                  Oldest to Newest
+                </MenuItem>
+                <MenuItem onClick={() => setSortBy("most-popular")}>
+                  Most Popular
+                </MenuItem>
+                <MenuItem onClick={() => setSortBy("least-popular")}>
+                  Least Popular
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </Box>
+          <Box>
+            {sorted.map((post) => (
+              <Box key={post.id} mb={4}>
+                <Post post={post} />
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      )}
     </Box>
-  );
+  )
 };

@@ -8,7 +8,6 @@ import TextareaAutosize from "react-textarea-autosize";
 import theme from "./theme";
 import { useCategories } from "hooks/Categories";
 
-
 function NewPost() {
   const { register, handleSubmit, reset } = useForm();
   const { addPost, isLoading: addingPost } = useAddPost();
@@ -41,7 +40,7 @@ function NewPost() {
   
   useEffect(() => {
     getCategories();
-  }, []);
+  }, [getCategories]);
 
   useEffect(() => {
     setIsFormValid(selectedCategories.length > 0);
