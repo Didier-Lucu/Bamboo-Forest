@@ -49,7 +49,7 @@ export default function PostLists({ posts }) {
           {sorted?.length > 0 && (
             <Box paddingX={"60px"} align={"left"}>
               <Menu>
-                <MenuButton as={Button} rightIcon={<HamburgerIcon />}>
+                <MenuButton as={Button} rightIcon={<HamburgerIcon />} colorScheme="blue">
                   Sort by {sortBy === "" ? "(Default)" : ""}
                 </MenuButton>
                 <MenuList>
