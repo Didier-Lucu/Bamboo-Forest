@@ -83,9 +83,9 @@ export default function PostLists({ posts }) {
       ) : (
         <Box paddingX={"200px"} align={"center"}>
           <HStack>
-          <Box paddingX={"60px"} align={"left"}>
+          <Box paddingLeft={"60px"} paddingRight={"10px"} align={"left"}>
             <Menu>
-              <MenuButton as={Button} rightIcon={<HamburgerIcon />}>
+              <MenuButton as={Button} rightIcon={<HamburgerIcon />} colorScheme="blue">
                 Sort by {sortBy === "" ? "(Default)" : ""}
               </MenuButton>
               <MenuList>
