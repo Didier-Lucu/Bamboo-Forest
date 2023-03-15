@@ -86,8 +86,18 @@ export function useUpdateUser(uid) {
   }, [canChange]);
 
   async function updateUsername() {
+    if (!username) {
+      toast({
+        title: "Empty field",
+        description: "Please put in a new username",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
     setLoading(true);
-
     const docRef = doc(db, "users", uid);
     await updateDoc(docRef, { username });
 
