@@ -11,17 +11,21 @@
 ``` bash
 git clone https://github.com/Didier-Lucu/Bamboo-Forest.git
 ```
-#### Step 2. 
+#### Step 2.
 ``` bash
-cd ucla-bamboo-forest
+cd Bamboo-Forest
 ```
 #### Step 3. 
 ``` bash
-npm install
+cd ucla-bamboo-forest
 ```
 #### Step 4. 
+``` bash
+npm install
+```
+#### Step 5. 
 ``` bash
 npm start
 ```
 
-### _(MUST DOWNLOAD Node.js to do step 3 and further)_
+### _(MUST DOWNLOAD Node.js to do step 4 and further)_
