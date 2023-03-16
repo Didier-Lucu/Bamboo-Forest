@@ -9,11 +9,11 @@
 ## 👨‍💻 Installation 👨‍💻 
 #### Step 1.
 ``` bash
-git clone https://github.com/Didier-Lucu/Bamboo-Forest.git
+Untar the project
 ```
 #### Step 2.
 ``` bash
-cd Bamboo-Forest
+cd Bamboo-Forest-main
 ```
 #### Step 3. 
 ``` bash
