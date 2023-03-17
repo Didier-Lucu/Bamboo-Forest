@@ -22,7 +22,8 @@ IF downloaded as zip unzip the project
 Open your terminal and navigate to the root folder of the project.
 
 IF downloaded as tarball:
-cd Didier-Lucu-Bamboo-Forest-7e184cb
+cd into extracted folder
+ex) cd Didier-Lucu-Bamboo-Forest-<SOME HASH> 
 
 IF downloaded as zip: 
 cd Bamboo-Forest-main
