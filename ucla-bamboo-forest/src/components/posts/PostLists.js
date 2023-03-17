@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -14,16 +14,19 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import Post from "./index";
-import { useCategories } from "hooks/Categories";
 
 export default function PostLists({ posts }) {
-  const { categories, getCategories } = useCategories();
   const [sortBy, setSortBy] = useState("");
   const [selectedFilters, setSelectedFilters] = useState([]);
 
-  useEffect(() => {
-    getCategories();
-  }, [getCategories]);
+  const categories = posts.reduce((acc, post) => {
+    post.category.forEach(category => {
+      if (!acc.includes(category)) {
+        acc.push(category);
+      }
+    });
+    return acc;
+  }, []);
 
   function sortedPosts(posts) {
     if (sortBy === "newest") {
@@ -48,34 +51,36 @@ export default function PostLists({ posts }) {
   const sorted = sortedPosts(filtered);
 
   const categoryCounts = categories.reduce((acc, category) => {
-    const count = posts.filter((post) => post.category.includes(category.name)).length;
-    acc[category.name] = count;
+    const count = posts.filter((post) => post.category.includes(category)).length;
+    acc[category] = count;
     return acc;
   }, {});
 
   return (
     <Box position="relative">
-      <VStack
-        position="absolute"
-        right={10}
-        top={10}
-        align="stretch"
-        justify="center"
-        spacing={4}
-      >
-        <VStack align="stretch" spacing={2}>
-          <Text fontSize="xl" fontWeight="bold">
-            Category
-          </Text>
-          <CheckboxGroup value={selectedFilters} onChange={(value) => setSelectedFilters(value)}>
-            {categories.map((category) => (
-              <Checkbox key={category.id} value={category.name}>
-                {`${category.name} (${categoryCounts[category.name]})`}
-              </Checkbox>
-            ))}
-          </CheckboxGroup>
+      {sorted?.length > 0 && (
+        <VStack
+          position="absolute"
+          right={20}
+          top={10}
+          align="stretch"
+          justify="center"
+          spacing={4}
+        >
+          <VStack align="stretch" spacing={2}>
+            <Text fontSize="xl" fontWeight="bold">
+              Category
+            </Text>
+            <CheckboxGroup value={selectedFilters} onChange={(value) => setSelectedFilters(value)}>
+              {categories.map((category) => (
+                <Checkbox key={category} value={category}>
+                  {`${category} (${categoryCounts[category]})`}
+                </Checkbox>
+              ))}
+            </CheckboxGroup>
+          </VStack>
         </VStack>
-      </VStack>
+      )}
       {sorted?.length === 0 ? (
         <Text textAlign={"center"} fontSize={"xl"} fontWeight={"bold"}>
           No Posts Yet
@@ -83,7 +88,7 @@ export default function PostLists({ posts }) {
       ) : (
         <Box paddingX={"200px"} align={"center"}>
           <HStack>
-          <Box paddingLeft={"60px"} paddingRight={"10px"} align={"left"}>
+          <Box paddingX={"60px"} paddingRight={"10px"} align={"left"}>
             <Menu>
               <MenuButton as={Button} rightIcon={<HamburgerIcon />} colorScheme="blue">
                 Sort by {sortBy === "" ? "(Default)" : ""}
