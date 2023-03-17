@@ -21,6 +21,9 @@ IF downloaded as zip unzip the project
 ``` bash
 Open your terminal and navigate to the root folder of the project.
 
+IF downloaded as tarball:
+cd Didier-Lucu-Bamboo-Forest-7e184cb
+
 IF downloaded as zip: 
 cd Bamboo-Forest-main
 
